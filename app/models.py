@@ -1,6 +1,7 @@
 from enum import StrEnum
+from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class TaskStatus(StrEnum):
@@ -43,3 +44,26 @@ class Project(BaseModel):
 class ProjectPage(BaseModel):
     items: list[Project]
     total: int
+
+
+class ListTasksArgs(BaseModel):
+    model_config = ConfigDict(strict=True, extra="forbid")
+
+    status: Literal["open"]
+    limit: int = Field(ge=1, le=100)
+
+
+class SummaryTask(BaseModel):
+    model_config = ConfigDict(strict=True, extra="forbid")
+
+    id: int
+    title: str
+    reason: str
+
+
+class TaskSummary(BaseModel):
+    model_config = ConfigDict(strict=True, extra="forbid")
+
+    headline: str
+    total_open: int
+    top_tasks: list[SummaryTask]
