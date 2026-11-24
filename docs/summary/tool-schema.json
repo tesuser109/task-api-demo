@@ -1,0 +1,14 @@
+{
+  "name": "list_tasks",
+  "description": "List tasks in the task application. Use it to get the open tasks before writing a summary.",
+  "strict": true,
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "status": {"type": "string", "enum": ["open", "in_progress", "closed"]},
+      "limit": {"type": "integer", "description": "How many tasks to return, from 1 to 100"}
+    },
+    "required": ["status", "limit"],
+    "additionalProperties": false
+  }
+}

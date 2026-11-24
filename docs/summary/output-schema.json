@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "headline": {"type": "string", "description": "One sentence for the team"},
+    "total_open": {"type": "integer"},
+    "top_tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "integer"},
+          "title": {"type": "string"},
+          "reason": {"type": "string", "description": "Why it matters, in a few words"}
+        },
+        "required": ["id", "title", "reason"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["headline", "total_open", "top_tasks"],
+  "additionalProperties": false
+}

@@ -1,0 +1,11 @@
+[
+  {
+    "number": 1,
+    "title": "Add a task-summary assistant",
+    "state": "open",
+    "labels": [
+      "feature"
+    ],
+    "body": "Developers want a short summary of open work without reading every task.\n\n## Acceptance criteria\n\n1. `POST /tasks/summary` returns `headline`, `total_open` and `top_tasks` for open tasks.\n2. Claude gets exactly one tool, `list_tasks`, from `docs/summary/tool-schema.json`. The app validates the arguments and runs the tool through `TaskService`. Only `status: open` and a limit from 1 to 100 are allowed. Anything else returns an error tool result and runs nothing.\n3. The final answer uses the structured output in `docs/summary/output-schema.json`.\n4. Before returning, the app checks `total_open`, and the id and title of every top task, against the tool result. A mismatch, or an answer without a tool call, returns 502 `summary_rejected`.\n5. A Claude API failure returns 503 `claude_unavailable`. One summary makes at most 4 Claude requests.\n6. Tests use a fake client and no network. Existing endpoints do not change.\n"
+  }
+]

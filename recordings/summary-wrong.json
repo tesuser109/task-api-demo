@@ -1,0 +1,43 @@
+[
+  {
+    "id": "msg_sample_1",
+    "type": "message",
+    "role": "assistant",
+    "model": "claude-opus-5-5",
+    "content": [
+      {
+        "type": "tool_use",
+        "id": "toolu_sample_1",
+        "name": "list_tasks",
+        "input": {
+          "status": "open",
+          "limit": 100
+        }
+      }
+    ],
+    "stop_reason": "tool_use",
+    "stop_sequence": null,
+    "usage": {
+      "input_tokens": 0,
+      "output_tokens": 0
+    }
+  },
+  {
+    "id": "msg_sample_2",
+    "type": "message",
+    "role": "assistant",
+    "model": "claude-opus-5-5",
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"headline\": \"Five open tasks, three need attention.\", \"total_open\": 5, \"top_tasks\": [{\"id\": 1, \"title\": \"Fix login redirect loop\", \"reason\": \"High priority and blocks sign-in\"}, {\"id\": 3, \"title\": \"Crash when opening an empty inbox\", \"reason\": \"High priority crash\"}, {\"id\": 2, \"title\": \"Update password help text\", \"reason\": \"Quick win\"}]}"
+      }
+    ],
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "usage": {
+      "input_tokens": 0,
+      "output_tokens": 0
+    }
+  }
+]

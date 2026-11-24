@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv run pytest *)",
+      "PowerShell(uv run pytest *)",
+      "mcp__issue-tracker__list_issues",
+      "mcp__issue-tracker__get_issue"
+    ],
+    "ask": ["Bash(git push *)", "PowerShell(git push *)"],
+    "deny": [
+      "Read(./.env)",
+      "Read(./tools/issue_tracker/issues.json)",
+      "Bash(git push origin main*)",
+      "PowerShell(git push origin main*)"
+    ]
+  }
+}

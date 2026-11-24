@@ -1,0 +1,36 @@
+name: feature
+
+on:
+  push:
+    branches: ["feature/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: pipx install uv
+      - run: uv run pytest -q
+
+  open-pr:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+      - name: Open a pull request for human review
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          if [ -n "$(gh pr list --head "$BRANCH" --state open --json number --jq '.[].number')" ]; then
+            exit 0
+          fi
+          gh pr create --base main --head "$BRANCH" \
+            --title "$(git log -1 --format=%s)" \
+            --body "Closes #1. Tests passed. A person must review and approve this before merging."
