@@ -1,8 +1,12 @@
-from fastapi import Request
+from typing import Annotated
 
+from fastapi import Depends, Request
+
+from app.claude_client import ClaudeClient, get_claude_client
 from app.repositories.project_repository import ProjectRepository
 from app.repositories.task_repository import TaskRepository
 from app.services.project_service import ProjectService
+from app.services.summary_service import SummaryService
 from app.services.task_service import TaskService
 
 
@@ -13,3 +17,10 @@ def get_task_service(request: Request) -> TaskService:
 
 def get_project_service(request: Request) -> ProjectService:
     return ProjectService(ProjectRepository(request.app.state.conn))
+
+
+def get_summary_service(
+    claude: Annotated[ClaudeClient, Depends(get_claude_client)],
+    tasks: Annotated[TaskService, Depends(get_task_service)],
+) -> SummaryService:
+    return SummaryService(claude, tasks)

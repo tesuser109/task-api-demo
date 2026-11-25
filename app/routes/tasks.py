@@ -3,8 +3,9 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query
 
-from app.dependencies import get_task_service
-from app.models import Task, TaskCreate, TaskPage, TaskStatus
+from app.dependencies import get_summary_service, get_task_service
+from app.models import Task, TaskCreate, TaskPage, TaskStatus, TaskSummary
+from app.services.summary_service import SummaryService
 from app.services.task_service import TaskService
 
 logger = logging.getLogger(__name__)
@@ -31,3 +32,10 @@ def get_task(task_id: int, service: Service) -> Task:
 @router.post("", status_code=201)
 def create_task(data: TaskCreate, service: Service) -> Task:
     return service.create_task(data)
+
+
+@router.post("/summary")
+def summarize_tasks(
+    service: Annotated[SummaryService, Depends(get_summary_service)],
+) -> TaskSummary:
+    return service.summarize()
